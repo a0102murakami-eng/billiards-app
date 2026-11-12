@@ -6,6 +6,11 @@
   const $ = id => document.getElementById(id);
   const table = $("table");
   let balls = [], selected = null, active = null, records = [], drag = null, dirty = false;
+  // touch-action に加え、球のドラッグ中だけブラウザのタッチスクロールを抑止する。
+  // document で受けることで、指が台の外へ移動しても抑止を継続する。
+  document.addEventListener("touchmove", e => {
+    if (drag && e.cancelable) e.preventDefault();
+  }, { passive: false });
   let storageHealthy = true;
   function message(text, error = false) { $("status").textContent = text; $("status").classList.toggle("error", error); }
   function ballLabel(n) { return n === 0 ? "白球" : `${n}番`; }
@@ -75,10 +80,11 @@
       });
       el.addEventListener("pointermove", e => {
         if (!drag || drag.id !== e.pointerId) return;
+        if (e.cancelable) e.preventDefault();
         const p=point(e), x=Math.max(R,Math.min(1-R,p.x+drag.dx)), y=Math.max(R,Math.min(.5-R,p.y+drag.dy));
         if (validPosition(x,y,b.n)) { b.x=x;b.y=y;placeElement(el,b);dirty=true;drag.invalid=false;message(`${ballLabel(b.n)}を移動中です。`); }
         else { drag.invalid=true; message("球が重なる位置には移動できません。最後に置けた位置を保っています。",true); }
-      });
+      }, { passive: false });
       const finish = e => { if (drag && drag.id === e.pointerId) { const invalid=drag.invalid; drag=null; if (!invalid) message(`${ballLabel(b.n)}の位置を設定しました。`); } };
       el.addEventListener("pointerup",finish);el.addEventListener("pointercancel",finish);el.addEventListener("lostpointercapture",finish);
       el.addEventListener("keydown", e => {
