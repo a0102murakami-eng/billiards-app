@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ビリヤードノート | 球配置を記録</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header><span class="eyebrow">BILLIARDS PRACTICE</span><h1>ビリヤードノート<span class="logo-ball">8</span></h1><p>気づいた配置を残して、次の練習へ。</p></header>
+  <main>
+    <section class="workspace" aria-labelledby="table-title">
+      <div class="section-heading"><h2 id="table-title">球の配置</h2><span id="ball-count">0 / 16 球</span></div>
+      <p class="help">① 球を選ぶ → ② 台をタップして配置。置いた球はドラッグで移動できます。</p>
+      <div class="table-frame"><div id="table" aria-label="ビリヤード台。選択した球をクリックまたはタップで配置">
+        <span class="pocket top left"></span><span class="pocket top middle"></span><span class="pocket top right"></span><span class="pocket bottom left"></span><span class="pocket bottom middle"></span><span class="pocket bottom right"></span>
+        <span class="head-line"></span><span class="spot"></span>
+      </div></div>
+      <p id="status" role="status" aria-live="polite">白球または番号の球を選んでください。</p>
+      <div id="palette" aria-label="配置する球を選択"></div>
+      <div class="actions"><button id="delete-ball" disabled>選択した球を削除</button><button id="clear-balls" class="danger">球をすべて削除</button></div>
+      <p class="help">配置済みの球をタップすると削除対象に選べます。キーボードでは球を選び、矢印キーで移動・Deleteキーで削除できます。</p>
+    </section>
+    <aside>
+      <section class="card"><span class="eyebrow">PRACTICE NOTE</span><h2>配置を記録する</h2><form id="save-form"><label for="title">タイトル</label><input id="title" maxlength="100" placeholder="例：サイドポケットへの薄いカット"><label for="memo">練習メモ</label><textarea id="memo" rows="5" maxlength="5000" placeholder="狙い方、力加減、気づいたことなど"></textarea><button class="primary" type="submit">この配置を保存</button></form><button id="new-layout" class="text-button">新しい配置を作る</button><p class="help">保存するたびに新しい記録を追加します。</p></section>
+      <section class="card"><div class="section-heading"><h2>保存した配置</h2><span id="saved-count">0 件</span></div><p class="storage-note">この端末・ブラウザ内に保存されます。PCとスマホでは自動同期されません。ブラウザのデータを消すと記録も消えます。</p><div id="saved-list"></div></section>
+    </aside>
+  </main>
+  <footer>ビリヤードノート · あなたの練習を、少しずつ記録。</footer>
+</body>
+</html>
